@@ -1,11 +1,10 @@
 from pathlib import Path
 
 # Variables
-file_path = Path(__file__).with_name("input.txt")
+file_path = Path(__file__).with_name("test.txt")
 file_content = ""
 list1 = []
 list2 = []
-difference = 0
 
 # Code Part 1
 
@@ -18,11 +17,14 @@ for i in range(len(file_content)):
   else:
     list2.append(file_content[i])
 
-list1.sort()
-list2.sort()
+list1_part1 = sorted(list1)
+list2_part1 = sorted(list2)
 
-for i in range(len(list1)):
-  dif = abs(int(list1[i])-int(list2[i]))
-  difference += dif
+solution_part1 = 0
+
+for i in range(len(list1_part1)):
+  dif = abs(int(list1_part1[i])-int(list2_part1[i]))
+  solution_part1 += dif
   
-print(difference)
+print(solution_part1)
+
