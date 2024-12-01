@@ -1,7 +1,7 @@
 from pathlib import Path
 
 # Variables
-file_path = Path(__file__).with_name("test.txt")
+file_path = Path(__file__).with_name("input.txt")
 file_content = ""
 list1 = []
 list2 = []
@@ -28,3 +28,16 @@ for i in range(len(list1_part1)):
   
 print(solution_part1)
 
+
+# Code Part 2
+
+list1_part2 = list1
+list2_part2 = list2
+
+solution_part2 = 0
+
+for item in list1_part2:
+  score = int(item) * list2_part2.count(item)
+  solution_part2 += score
+
+print(solution_part2)
