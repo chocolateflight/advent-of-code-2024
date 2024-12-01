@@ -8,7 +8,7 @@ Advent of Code is an annual coding challenge that runs every December. Each day,
 This repository contains my solutions for the 2024 edition. Feel free to explore, learn, and share your thoughts!
 
 ## Structure
-- **DayXX/**: Each folder represents a day’s challenge, containing my code and any relevant notes or explanations.
+- **DayXX**: Each folder represents a day’s challenge, containing my code and any relevant notes or explanations.
 
 ## Get Involved
 Check out the [Advent of Code website](https://adventofcode.com/) to join the challenge and view the problems.
