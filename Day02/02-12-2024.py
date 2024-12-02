@@ -21,3 +21,6 @@ filtered_safety = [
 ]
 
 print(len(filtered_safety))
+
+# -----Code Part 2-----
+#tbd - Not solved in time
