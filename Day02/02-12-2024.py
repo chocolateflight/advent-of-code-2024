@@ -11,21 +11,20 @@ with file_path.open("r") as f:
 
 part1_content = [list(map(int, line.strip().split())) for line in file_content]
 
+def is_safe_report(report):
+    differences = []
+    for a, b in itertools.pairwise(report):
+        differences.append(b - a)    
+    same_direction = all(x > 0 for x in differences) or all(x < 0 for x in differences)
+    differences_in_range = all(1 <= abs(x) <= 3 for x in differences)
+    return same_direction and differences_in_range
+    
+safe_reports_part1 = []
+for report in part1_content:
+    if is_safe_report(report):
+        safe_reports_part1.append(report)
 
-safety = [
-    [int(a) - int(b) for a, b in itertools.pairwise(report)] 
-    for report in part1_content 
-]
-
-
-filtered_safety = [
-    sublist for sublist in safety # 
-    if (all(x > 0 for x in sublist) or all(x < 0 for x in sublist)) 
-    and all(1 <= abs(x) <= 3 for x in sublist) 
-]
-
-
-print(len(filtered_safety))
+print(len(safe_reports_part1))
 
 # -----Code Part 2-----
 
