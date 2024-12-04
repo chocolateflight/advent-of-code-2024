@@ -10,6 +10,36 @@ This repository contains my solutions for the 2024 edition. Feel free to explore
 ## Structure
 - **DayXX**: Each folder represents a day’s challenge, containing my code and any relevant notes or explanations.
 
+## Progress Table
+
+|Day|Part 1|Part 2|
+|---|------|------|
+|1|✅|✅|
+|2|✅|✅|
+|3|✅|✅|
+|4|✅|❌|
+|5|||
+|6|||
+|7|||
+|8|||
+|9|||
+|10|||
+|11|||
+|12|||
+|13|||
+|14|||
+|15|||
+|16|||
+|17|||
+|18|||
+|19|||
+|20|||
+|21|||
+|22|||
+|23|||
+|24|||
+
+
 ## Get Involved
 Check out the [Advent of Code website](https://adventofcode.com/) to join the challenge and view the problems.
 
