@@ -1,14 +1,195 @@
-from pathlib import Path 
+from pathlib import Path
+import re
 
 file_path = Path(__file__).with_name("input.txt")
 with file_path.open("r") as f:
-    file_content = f.read()
+    file_content = [line.strip() for line in f.readlines()]
 
-# -----General----
-    
+# -----General-----
+
+def string_reverse(string):
+    reversed_string = string[::-1]
+    return reversed_string
+
+
+def word_finder(string, pattern):
+    word_matches = [
+        [m.group(), m.start(), m.end()] for m in re.finditer(pattern, string)
+    ]
+    return word_matches
+
+
+def horizontalize(array, reverse=True):
+    horizontalized_strings = []
+
+    for j in range(len(array)):
+        temp_string = array[j]
+        temp_dict = {
+            "string": temp_string,
+            "direction": "horizontal",
+            "reversed": False,
+            "row": j,
+        }
+        horizontalized_strings.append(temp_dict)
+
+        if reverse:
+            temp_reversed = string_reverse(temp_string)
+            temp_dict_rev = {
+                "string": temp_reversed,
+                "direction": "horizontal",
+                "reversed": True,
+                "row": j,
+            }
+            horizontalized_strings.append(temp_dict_rev)
+
+    return horizontalized_strings
+
+
+def verticalize(array, reverse=True):
+    number_row = len(array)
+    number_col = len(array[0])
+
+    verticalized_strings = []
+
+    for i in range(number_col):
+        current_row = 0
+        temp_string = ""
+
+        while current_row < number_row:
+            temp_string += array[current_row][i]
+            current_row += 1
+
+        temp_dict = {
+            "string": temp_string,
+            "direction": "vertical",
+            "reversed": False,
+            "column": i,
+        }
+        verticalized_strings.append(temp_dict)
+
+        if reverse:
+            temp_reversed = string_reverse(temp_string)
+            temp_dict_rev = {
+                "string": temp_reversed,
+                "direction": "vertical",
+                "reversed": True,
+                "column": i,
+            }
+            verticalized_strings.append(temp_dict_rev)
+
+    return verticalized_strings
+
+
+def diagonalize(array, reverse=True):
+    number_row = len(array)
+    number_col = len(array[0])
+    diagonalized_strings = []
+
+    for d in range(-(number_row - 1), number_col):
+        temp_string = ""
+
+        for i in range(number_row):
+            j = i + d
+
+            if 0 <= j < number_col:
+                temp_string += array[i][j]
+
+        if temp_string:
+            temp_dict = {
+                "string": temp_string,
+                "direction": "diagonal",
+                "reversed": False,
+                "diagonal": d,
+            }
+            diagonalized_strings.append(temp_dict)
+
+            if reverse:
+                temp_reversed = temp_string[::-1]
+                temp_dict_rev = {
+                    "string": temp_reversed,
+                    "direction": "diagonal",
+                    "reversed": True,
+                    "diagonal": d,
+                }
+                diagonalized_strings.append(temp_dict_rev)
+
+    for d in range(number_row + number_col - 1):
+        temp_string = ""
+
+        for i in range(number_row):
+            j = d - i
+
+            if 0 <= j < number_col:
+                temp_string += array[i][j]
+
+        if temp_string:
+            temp_dict = {
+                "string": temp_string,
+                "direction": "antidiagonal",
+                "reversed": False,
+                "antidiagonal": d,
+            }
+            diagonalized_strings.append(temp_dict)
+
+            if reverse:
+                temp_reversed = temp_string[::-1]
+                temp_dict_rev = {
+                    "string": temp_reversed,
+                    "direction": "antidiagonal",
+                    "reversed": True,
+                    "antidiagonal": d,
+                }
+                diagonalized_strings.append(temp_dict_rev)
+
+    return diagonalized_strings
+
+
+def main(array, pattern=None, reverse=True):
+    horizontal_strings = horizontalize(array)
+    vertical_strings = verticalize(array)
+    diagonal_strings = diagonalize(array)
+
+    all_strings = [
+        item
+        for list in [horizontal_strings, vertical_strings, diagonal_strings]
+        for item in list
+    ]
+
+    total_list = []
+
+    for item in all_strings:
+        found_words = word_finder(item["string"], pattern)
+
+        if found_words:
+            item["found_words"] = found_words
+            item["total_matches"] = len(found_words)
+            total_list.append(item)
+
+    return total_list
+
+
 # -----Code Part 1-----
 
+
+def part1():
+    pattern1 = r"XMAS"
+    part1_matches = main(file_content, pattern1, True)
+
+    total_number = 0
+    
+    for item in part1_matches:
+      total_number += item["total_matches"]
+      
+    print(total_number)
+
+part1()
+
 # -----Code Part 2-----
+
+
+def part2():
+    pass
+
 
 # -----Documentation-----
 # This code for this challenge was written without the help of AI. The documentation was generated by ChatGPT.
