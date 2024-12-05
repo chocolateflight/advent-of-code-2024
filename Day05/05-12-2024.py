@@ -23,29 +23,27 @@ for item in file_content:
 correct_instructions = []
 total_middle = 0
 number_combinations = []
-    
+
 for numbers in page_numbers:
     number_combinations.append(
         {
             "page_numbers": numbers,
             "combinations": list(combinations(numbers, 2)),
-            "append": 1
+            "append": 1,
         }
     )
-    
-
 
 for pages in number_combinations:
-    
+
     for rule in page_ordering_rules:
-        
+
         if rule[::-1] in pages["combinations"]:
             pages["append"] = False
             continue
-        
+
         if (pages["append"] != False) and (rule in pages["combinations"]):
             pages["append"] = True
-            
+
     if pages["append"]:
         correct_instructions.append(pages["page_numbers"])
         total_middle += pages["page_numbers"][len(pages["page_numbers"]) // 2]
