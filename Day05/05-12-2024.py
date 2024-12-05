@@ -1,12 +1,56 @@
-from pathlib import Path 
+from pathlib import Path
+from itertools import combinations
+import re
 
 file_path = Path(__file__).with_name("input.txt")
 with file_path.open("r") as f:
-    file_content = f.read()
+    file_content = f.read().split()
 
 # -----General----
-    
+instructions_pattern = r"[0-9]+\|[0-9]+"
+page_ordering_rules = []
+page_numbers = []
+
+for item in file_content:
+    if re.match(instructions_pattern, item):
+        cleaned_rule = tuple([int(i) for i in item.split("|")])
+        page_ordering_rules.append(cleaned_rule)
+    else:
+        cleaned_number = [int(i) for i in item.split(",")]
+        page_numbers.append(cleaned_number)
+
 # -----Code Part 1-----
+correct_instructions = []
+total_middle = 0
+number_combinations = []
+    
+for numbers in page_numbers:
+    number_combinations.append(
+        {
+            "page_numbers": numbers,
+            "combinations": list(combinations(numbers, 2)),
+            "append": 1
+        }
+    )
+    
+
+
+for pages in number_combinations:
+    
+    for rule in page_ordering_rules:
+        
+        if rule[::-1] in pages["combinations"]:
+            pages["append"] = False
+            continue
+        
+        if (pages["append"] != False) and (rule in pages["combinations"]):
+            pages["append"] = True
+            
+    if pages["append"]:
+        correct_instructions.append(pages["page_numbers"])
+        total_middle += pages["page_numbers"][len(pages["page_numbers"]) // 2]
+
+print(total_middle)
 
 # -----Code Part 2-----
 
